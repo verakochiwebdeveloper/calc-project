@@ -1,13 +1,13 @@
 const projectTitle = document.getElementsByTagName(h1);
-const  calculateBtn = document.getElementsByClassName(handler_btn)
-const  resetBtn = document.getElementsByClassName(handler_btn)
+const  calculateBtn = document.getElementsByClassName('.handler_btn')
+const  resetBtn = document.getElementsByClassName('.handler_btn')
 const  plusBtn = document.querySelector('.screen-btn')
 const  screenBtn = document.querySelectorAll('.screen-btn')
 const itemsWithPercent = document.querySelectorAll('.other-items.percent');
 const itemsWithNumber = document.querySelectorAll('.other-items.number');
 const rangeInput = document.querySelector('.rollback input[type="range"]');
 const rangeValue= document.querySelector('.rollback.range-value');
-const totalInput= document.getElementsByClassName(total-input);
+const totalInput= document.getElementsByClassName('.total-input');
 let screenBlocks = document.querySelectorAll('.screen');
 
 
