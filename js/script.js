@@ -7,7 +7,10 @@ const itemsWithPercent = document.querySelectorAll('.other-items.percent');
 const itemsWithNumber = document.querySelectorAll('.other-items.number');
 const rangeInput = document.querySelector('.rollback input[type="range"]');
 const rangeValue= document.querySelector('.rollback.range-value');
-const totalInput= document.getElementsByClassName('.total-input');
+const totalInputs = document.getElementsByClassName('total-input');
+const totalInputsArray = Array.from(totalInputs);
+console.log(totalInputsArray);
+
 let screenBlocks = document.querySelectorAll('.screen');
 
 
