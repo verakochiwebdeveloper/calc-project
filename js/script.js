@@ -8,8 +8,12 @@ const itemsWithNumber = document.querySelectorAll('.other-items.number');
 const rangeInput = document.querySelector('.rollback input[type="range"]');
 const rangeValue= document.querySelector('.rollback.range-value');
 const totalInputs = document.getElementsByClassName('total-input');
-const totalInputsArray = Array.from(totalInputs);
-console.log(totalInputsArray);
+//не совсем красиво получаеться
+const totalInput1 = totalInputs[0];
+const totalInput2 = totalInputs[1];
+const totalInput3 = totalInputs[2];
+const totalInput4 = totalInputs[3];
+const totalInput5 = totalInputs[4];
 
 let screenBlocks = document.querySelectorAll('.screen');
 
