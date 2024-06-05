@@ -11,7 +11,9 @@ const totalInput = document.getElementsByClassName('total-input');
 //не совсем красиво получаеться
 const total = document.getElementsByClassName('total-input')[0]; //1-ый input
 const totalCount = document.getElementsByClassName('total-input')[1]; //2-ый input
-const totalFullCount = document.getElementsByClassName('total-input')[9999]; //10000-ый input :)
+const totalCountOther = document.getElementsByClassName('total-input')[2]; //3-ый input
+const totalFullCount = document.getElementsByClassName('total-input')[3]; //4-ый input
+const totalRollback = document.getElementsByClassName('total-input')[4]; //5-ый input
 
 let screenBlocks = document.querySelectorAll('.screen');
 
