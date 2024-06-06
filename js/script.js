@@ -1,4 +1,4 @@
-const projectTitle = document.getElementsByTagName(h1);
+const projectTitle = document.getElementsByTagName(h1)[0];
 const  calculateBtn = document.getElementsByClassName('.handler_btn')
 const  resetBtn = document.getElementsByClassName('.handler_btn')
 const  plusBtn = document.querySelector('.screen-btn')
@@ -14,7 +14,6 @@ const totalCount = document.getElementsByClassName('total-input')[1]; //2-ый i
 const totalCountOther = document.getElementsByClassName('total-input')[2]; //3-ый input
 const totalFullCount = document.getElementsByClassName('total-input')[3]; //4-ый input
 const totalRollback = document.getElementsByClassName('total-input')[4]; //5-ый input
-
 let screenBlocks = document.querySelectorAll('.screen');
 
 
@@ -29,6 +28,14 @@ const appData = {
     servicePercentPrice: 0,
     service1: "",
     service2: "",
+    init: function () {
+      appData.adTitle();
+      appData.start();
+    },
+
+    adTitle: function () {
+      document.title = projectTitle.textContent;
+    },
   
     getTitle: function (titletext) {
       let getTitletrim = titletext.trim();
@@ -125,5 +132,5 @@ const appData = {
     },
   };
   
-  appData.start();
+  appData.init();
   
