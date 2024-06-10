@@ -1,4 +1,4 @@
-const projectTitle = document.getElementsByTagName(h1)[0];
+const projectTitle = document.getElementsByTagName('h1')[0];
 const  calculateBtn = document.getElementsByClassName('.handler_btn')
 const  resetBtn = document.getElementsByClassName('.handler_btn')
 const  plusBtn = document.querySelector('.screen-btn')
@@ -25,24 +25,29 @@ const appData = {
     rollback: Math.ceil(Math.random() * 100),
     AllServicePrices: 0,
     fullPrice: 0,
-    servicePercentPrice: 0,
+    servicePercentPrice: {},
+    servicePercentPricent: {},
+    servicePercentNumber: {},
     service1: "",
     service2: "",
     init: function () {
       appData.adTitle();
+
+      calculateBtn.addEventListener('clic', appData.start);
+      screenBtn.addEventListener('clic', appData.addScreenBlock);
+
       appData.start();
+    },
+
+    addScreenBlock: function() {
+      const cloneScreenBlocks = screenBlocks[0].cloneNode(true);
+      screenBlocks[screenBlocks.length -1].after(cloneScreenBlocks)
     },
 
     adTitle: function () {
       document.title = projectTitle.textContent;
     },
   
-    getTitle: function (titletext) {
-      let getTitletrim = titletext.trim();
-      const firstLetter = getTitletrim.charAt(0).toUpperCase();
-      const restOfTitle = getTitletrim.slice(1).toLowerCase();
-      return firstLetter + restOfTitle;
-    },
   
     getAllServicePrices: function (price1, price2) {
       while (true) {
@@ -83,54 +88,68 @@ const appData = {
         return "что-то пошло не так";
       }
     },
-  
-    start: function () {
-      do {
-        this.title = prompt("Как называется ваш проект?");
-      } while (!isNaN(parseFloat(this.title)));
-  
-      do {
-        this.screens = prompt(
-          "Какие типы экранов нужно разработать?",
-          "Простые, Сложные, Интерактивные"
-        );
-      } while (!isNaN(parseFloat(this.screens)));
-  
-      do {
-        this.screenPrice = prompt("Сколько будет стоить данная работа?");
-      } while (
-        isNaN(this.screenPrice) ||
-        this.screenPrice === "" ||
-        this.screenPrice === null
-      );
-  
-      do {
-        this.service1 = prompt("Какой дополнительный тип услуги нужен?");
-      } while (!isNaN(parseFloat(this.service1)));
-  
-      do {
-        this.servicePrice1 = prompt("Сколько это будет стоить?");
-      } while (
-        isNaN(this.servicePrice1) ||
-        this.servicePrice1 === "" ||
-        this.servicePrice1 === null
-      );
-  
+
+    addScreens: function () {
+      let screenBlocks = document.querySelectorAll('.screen');
+      let totalScreenCount = 0;
+
+      screenBlocks.forEach(function(screen, index) {
+          const select = screen.querySelector('select');
+          const input = screen.querySelector('input');
+          const selectName = select.options[select.selectedIndex].textContent;
+          const screenCount = parseInt(input.value);
+
+          if (selectName !== "" && !isNaN(screenCount)) {
+              totalScreenCount += screenCount;
+
+              appData.screens.push({
+                  id: index,
+                  name: selectName,
+                  price: +select.value * screenCount,
+                  count: screenCount
+              });
+          }
+      });
+
+      // Display total screen count
+      totalCount.textContent = totalScreenCount;
+  },
+
+  start: function () {
+      this.addScreens();
+      this.addServices();
+
       const servicePrices = this.getAllServicePrices(
-        parseFloat(this.screenPrice),
-        parseFloat(this.servicePrice1)
+          parseFloat(this.screenPrice),
+          parseFloat(this.servicePrice1)
       );
-  
+
       this.fullPrice = this.getFullPrice(
-        parseFloat(this.screenPrice),
-        servicePrices
+          parseFloat(this.screenPrice),
+          servicePrices
       );
-  
+
       this.servicePercentPrice = this.fullPrice - this.rollback;
-  
+      
+      // Calculate and display service price with rollback
+      this.addPrices();
+
       this.logger();
-    },
-  };
-  
-  appData.init();
-  
+  },
+
+  addPrices: function () {
+      // Calculate service price with rollback
+      const servicePriceWithRollback = this.servicePercentPrice;
+
+      // Display service price with rollback
+      totalRollback.textContent = servicePriceWithRollback;
+  }
+};
+
+// Добавление обработчика события для range input
+rangeInput.addEventListener('input', function() {
+  rangeValue.textContent = rangeInput.value;
+  appData.rollback = parseInt(rangeInput.value);
+});
+
+appData.init();
