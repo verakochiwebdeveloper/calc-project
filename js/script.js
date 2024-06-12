@@ -110,7 +110,7 @@ const appData = {
   }
 };
 
-/
+
 resetBtn.style.display = "none";
 calculateBtn.style.display = "block";
 
