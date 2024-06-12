@@ -1,6 +1,6 @@
 const projectTitle = document.getElementsByTagName('h1')[0];
-const  calculateBtn = document.getElementsByClassName('.handler_btn')
-const  resetBtn = document.getElementsByClassName('.handler_btn')
+const  calculateBtn = document.querySelector('.handler_btn')
+const  resetBtn = document.querySelector('.handler_btn')
 const  plusBtn = document.querySelector('.screen-btn')
 const  screenBtn = document.querySelectorAll('.screen-btn')
 const itemsWithPercent = document.querySelectorAll('.other-items.percent');
@@ -8,12 +8,11 @@ const itemsWithNumber = document.querySelectorAll('.other-items.number');
 const rangeInput = document.querySelector('.rollback input[type="range"]');
 const rangeValue= document.querySelector('.rollback.range-value');
 const totalInput = document.getElementsByClassName('total-input');
-//не совсем красиво получаеться
-const total = document.getElementsByClassName('total-input')[0]; //1-ый input
-const totalCount = document.getElementsByClassName('total-input')[1]; //2-ый input
-const totalCountOther = document.getElementsByClassName('total-input')[2]; //3-ый input
-const totalFullCount = document.getElementsByClassName('total-input')[3]; //4-ый input
-const totalRollback = document.getElementsByClassName('total-input')[4]; //5-ый input
+const total = document.getElementsByClassName('total-input')[0]; 
+const totalCount = document.getElementsByClassName('total-input')[1]; 
+const totalCountOther = document.getElementsByClassName('total-input')[2]; 
+const totalFullCount = document.getElementsByClassName('total-input')[3]; 
+const totalRollback = document.getElementsByClassName('total-input')[4]; 
 let screenBlocks = document.querySelectorAll('.screen');
 
 
@@ -33,15 +32,15 @@ const appData = {
     init: function () {
       appData.adTitle();
 
-      calculateBtn.addEventListener('clic', appData.start);
-      screenBtn.addEventListener('clic', appData.addScreenBlock);
+      calculateBtn.addEventListener('click', appData.start);
+      screenBtn.addEventListener('click', appData.addScreenBlock);
 
       appData.start();
     },
 
     addScreenBlock: function() {
       const cloneScreenBlocks = screenBlocks[0].cloneNode(true);
-      screenBlocks[screenBlocks.length -1].after(cloneScreenBlocks)
+      screenBlocks[screenBlocks.length -1].appendChild(cloneScreenBlocks)
     },
 
     adTitle: function () {
