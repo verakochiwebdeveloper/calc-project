@@ -18,138 +18,135 @@ let screenBlocks = document.querySelectorAll('.screen');
 
 
 const appData = {
-    title: "",
-    screens: "",
-    screenPrice: 0,
-    adaptive: true,
-    rollback: Math.ceil(Math.random() * 100),
-    AllServicePrices: 0,
-    fullPrice: 0,
-    servicePercentPrice: {},
-    servicePercentPricent: {},
-    servicePercentNumber: {},
-    service1: "",
-    service2: "",
-    init: function () {
-      appData.adTitle();
+  screenPrice: 0,
+  servicePrice1: 0,
+  screens: [],
+  fullPrice: 0,
+  rollback: 0,
+  servicePercentPrice: 0,
 
-      calculateBtn.addEventListener('clic', appData.start);
-      screenBtn.addEventListener('clic', appData.addScreenBlock);
+  adTitle() {
+    document.title = projectTitle.textContent;
+  },
 
-      appData.start();
-    },
-
-    addScreenBlock: function() {
-      const cloneScreenBlocks = screenBlocks[0].cloneNode(true);
-      screenBlocks[screenBlocks.length -1].after(cloneScreenBlocks)
-    },
-
-    adTitle: function () {
-      document.title = projectTitle.textContent;
-    },
-  
-  
-    getAllServicePrices: function (price1, price2) {
-      while (true) {
-        if (isNaN(price1) || price1 === "" || price1 === null) {
-          price1 = parseFloat(price1);
-          break;
-        } else {
-          alert("Пожалуйста, введите число.");
-        }
-      }
-      while (true) {
-        if (isNaN(price2) || price2 === "" || price2 === null) {
-          price2 = parseFloat(price2);
-          break;
-        } else {
-          alert("Пожалуйста, введите число.");
-        }
-      }
-      return price1 + price2;
-    },
-  
-    getFullPrice: function (price1, price2) {
-      return price1 + price2;
-    },
-  
-    isNumber: function (num) {
-      return !isNaN(parseFloat(num)) && isFinite(num);
-    },
-  
-    getRollbackMessage: function (fullPrice) {
-      if (fullPrice >= 30000) {
-        return "Даем скидку в 10%";
-      } else if (fullPrice >= 15000) {
-        return "Даем скидку в 5%";
-      } else if (fullPrice >= 0) {
-        return "Скидка не предусмотрена";
+  getAllServicePrices(price1, price2) {
+    while (true) {
+      if (isNaN(price1) || price1 === "" || price1 === null) {
+        price1 = parseFloat(price1);
+        break;
       } else {
-        return "что-то пошло не так";
+        alert("Please enter a number.");
       }
-    },
-
-    addScreens: function () {
-      let screenBlocks = document.querySelectorAll('.screen');
-      let totalScreenCount = 0;
-
-      screenBlocks.forEach(function(screen, index) {
-          const select = screen.querySelector('select');
-          const input = screen.querySelector('input');
-          const selectName = select.options[select.selectedIndex].textContent;
-          const screenCount = parseInt(input.value);
-
-          if (selectName !== "" && !isNaN(screenCount)) {
-              totalScreenCount += screenCount;
-
-              appData.screens.push({
-                  id: index,
-                  name: selectName,
-                  price: +select.value * screenCount,
-                  count: screenCount
-              });
-          }
-      });
-
-      // Display total screen count
-      totalCount.textContent = totalScreenCount;
+    }
+    while (true) {
+      if (isNaN(price2) || price2 === "" || price2 === null) {
+        price2 = parseFloat(price2);
+        break;
+      } else {
+        alert("Please enter a number.");
+      }
+    }
+    return price1 + price2;
   },
 
-  start: function () {
-      this.addScreens();
-      this.addServices();
-
-      const servicePrices = this.getAllServicePrices(
-          parseFloat(this.screenPrice),
-          parseFloat(this.servicePrice1)
-      );
-
-      this.fullPrice = this.getFullPrice(
-          parseFloat(this.screenPrice),
-          servicePrices
-      );
-
-      this.servicePercentPrice = this.fullPrice - this.rollback;
-      
-      // Calculate and display service price with rollback
-      this.addPrices();
-
-      this.logger();
+  getFullPrice(price1, price2) {
+    return price1 + price2;
   },
 
-  addPrices: function () {
-      // Calculate service price with rollback
-      const servicePriceWithRollback = this.servicePercentPrice;
+  isNumber(num) {
+    return !isNaN(parseFloat(num)) && isFinite(num);
+  },
 
-      // Display service price with rollback
-      totalRollback.textContent = servicePriceWithRollback;
+  getRollbackMessage(fullPrice) {
+    if (fullPrice >= 30000) {
+      return "Give a 10% discount";
+    } else if (fullPrice >= 15000) {
+      return "Give a 5% discount";
+    } else if (fullPrice >= 0) {
+      return "No discount provided";
+    } else {
+      return "Something went wrong";
+    }
+  },
+
+  addScreens() {
+    let screenBlocks = document.querySelectorAll('.screen');
+    let totalScreenCount = 0;
+
+    screenBlocks.forEach((screen, index) => {
+      const select = screen.querySelector('select');
+      const input = screen.querySelector('input');
+      const selectName = select.options[select.selectedIndex].textContent;
+      const screenCount = parseInt(input.value);
+
+      if (selectName !== "" && !isNaN(screenCount)) {
+        totalScreenCount += screenCount;
+
+        this.screens.push({
+          id: index,
+          name: selectName,
+          price: +select.value * screenCount,
+          count: screenCount
+        });
+      }
+    });
+
+    totalCount.textContent = totalScreenCount;
+  },
+
+  start() {
+    this.addScreens();
+    // this.addServices(); // Метод addServices не определен в данном коде
+
+    const servicePrices = this.getAllServicePrices(
+      parseFloat(this.screenPrice),
+      parseFloat(this.servicePrice1)
+    );
+
+    this.fullPrice = this.getFullPrice(
+      parseFloat(this.screenPrice),
+      servicePrices
+    );
+
+    this.servicePercentPrice = this.fullPrice - this.rollback;
+
+    this.addPrices();
+
+    this.logger();
+  },
+
+  addPrices() {
+    const servicePriceWithRollback = this.servicePercentPrice;
+
+    totalRollback.textContent = servicePriceWithRollback;
+  },
+
+  reset() {
+    // Reset to initial state
+    // Remove dynamically added elements and reset input values
+    // Unlock all input[type=text] and select elements
   }
 };
 
-// Добавление обработчика события для range input
+// Convert the project to arrow functions except object methods
+
+// Bind 'this' to appData object where necessary to maintain context
+
+// Disable all input[type=text] and select elements on the left side after Calculate button is clicked
+// Replace Calculate button with Reset button
+
+// Implement a reset() method in the object triggered by the Reset button
+// The reset() method should revert the object to its initial state
+
+// The Reset button should replace the Calculate button
+// All dynamically added elements and input values should be removed
+// All input[type=text] and select elements should be unlocked
+
+// Add event listener for range input
 rangeInput.addEventListener('input', function() {
   rangeValue.textContent = rangeInput.value;
   appData.rollback = parseInt(rangeInput.value);
 });
 
 appData.init();
+
